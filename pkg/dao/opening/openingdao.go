@@ -1,6 +1,8 @@
 package openingdao
 
 import (
+	"log"
+
 	"github.com/hunhunyosshy/black-and-white/pkg/db"
 )
 
@@ -16,14 +18,14 @@ func FetchIndex() []Opening {
 	//rowを取得
 	rows, err := db.Query("SELECT * FROM opening")
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err.Error())
 	}
 	openingArgs := make([]Opening, 0)
 	for rows.Next() {
 		var opening Opening
 		err = rows.Scan(&opening.ID, &opening.Name)
 		if err != nil {
-			panic(err.Error())
+			log.Fatal(err.Error())
 		}
 		openingArgs = append(openingArgs, opening)
 	}
@@ -37,14 +39,14 @@ func FetchByKey(id string) []Opening {
 	//rowを取得
 	rows, err := db.Query("SELECT * FROM opening WHERE opening_id = ?", id)
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err.Error())
 	}
 	openingArgs := make([]Opening, 0)
 	for rows.Next() {
 		var opening Opening
 		err = rows.Scan(&opening.ID, &opening.Name)
 		if err != nil {
-			panic(err.Error())
+			log.Fatal(err.Error())
 		}
 		openingArgs = append(openingArgs, opening)
 	}
