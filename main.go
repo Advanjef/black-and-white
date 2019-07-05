@@ -14,6 +14,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/opening/", showOpeningIndex)
 	r.HandleFunc("/opening/{id:[0-9]+}/", showOpeningByKey)
+	r.HandleFunc("/opening/insert/", inputOpening)
 	log.Fatal(http.ListenAndServe(":8080", r))
 
 }
@@ -34,4 +35,10 @@ func showOpeningByKey(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	w.Write([]byte(jsonEncode(openingdao.FetchByKey(id))))
+}
+
+func inputOpening(w http.ResponseWriter, r *http.Request) {
+	//POSTで対応したいが、ひとまず入ることを確認したいため直書きで書いている
+	name := "吉川戦法"
+	w.Write([]byte(jsonEncode(openingdao.Insert(name))))
 }

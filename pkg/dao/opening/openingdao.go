@@ -54,3 +54,16 @@ func FetchByKey(id string) []Opening {
 	}
 	return openingArgs
 }
+
+// Insert is inserting to Table "opening" by name
+func Insert(name string) string {
+	db := db.Connect()
+	defer db.Close()
+
+	insert, err := db.Prepare("INSERT INTO opening(name) VALUES(?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	insert.Exec(name)
+	return "ok"
+}
