@@ -67,3 +67,16 @@ func Insert(name string) string {
 	insert.Exec(name)
 	return "ok"
 }
+
+// Update is Updating to Table "opening" by opening_id
+func Update(id int, name string) string {
+	db := db.Connect()
+	defer db.Close()
+
+	update, err := db.Prepare("UPDATE opening SET name = ? WHERE opening_id = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	update.Exec(id, name)
+	return "ok"
+}
